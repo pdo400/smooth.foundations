@@ -18,11 +18,11 @@ namespace Smooth.Compare {
 		#region Comparer
 
 		/// <summary>
-		/// Creates a sort order comparer for type T, or returns None if no comparer can be created.
+		/// Returns an option containing a sort order comparer for type T, or None if no comparer can be created.
 		/// 
 		/// This method will create comparers for the following types:
 		/// 
-		/// System.Collections.KeyValuePair<,>
+		/// System.Collections.KeyValuePair<,>.
 		/// </summary>
 		public static Option<IComparer<T>> Comparer<T>() {
 			var type = typeof(T);
@@ -41,13 +41,13 @@ namespace Smooth.Compare {
 		#region EqualityComparer
 
 		/// <summary>
-		/// Creates an equality comparer for type T, or returns None if no comparer can be created.
+		/// Returns an option containing an equality comparer for type T, or None if no comparer can be created.
 		/// 
 		/// This method will create comparers for the following types:
 		/// 
-		/// Enumerations
-		/// System.Collections.KeyValuePair<,>
-		/// Value types T with a public T.Equals(T) method or ==(T,T) operator
+		/// Enumerations,
+		/// System.Collections.KeyValuePair<,>s,
+		/// Value types T with a public T.Equals(T) method or ==(T,T) operator.
 		/// </summary>
 		public static Option<IEqualityComparer<T>> EqualityComparer<T>() {
 			var type = typeof(T);
@@ -120,10 +120,20 @@ namespace Smooth.Compare {
 		}
 
 		/// <summary>
-		/// Returns an expression that evaluates to Smooth.Collections.Comparer<T>.Default for the runtime type of Type.
-		/// The out compare parameter will contain a MethodInfo for the returned expression's Compare(T, T) method.
+		/// Returns a tuple containing:
+		/// an Expression for the default sort order comparer for type T, and
+		/// a MethodInfo for the comparer's Compare(T, T) method.
 		/// </summary>
-		public static Expression ExistingComparer(Type type, out MethodInfo compare) {
+		public static Tuple<Expression, MethodInfo> ExistingComparer<T>() {
+			return ExistingComparer(typeof(T));
+		}
+
+		/// <summary>
+		/// Returns a tuple containing:
+		/// an Expression for the default comparer for the specified type, and
+		/// a MethodInfo for the comparer's Compare(T, T) method.
+		/// </summary>
+		public static Tuple<Expression, MethodInfo> ExistingComparer(Type type) {
 			var pi = typeof(Smooth.Collections.Comparer<>).MakeGenericType(type).GetProperty(
 				"Default",
 				BindingFlags.Public | BindingFlags.Static,
@@ -134,17 +144,28 @@ namespace Smooth.Compare {
 			
 			var c = Expression.Property(null, pi);
 			
-			compare = c.Type.GetMethod("Compare", BindingFlags.Public | BindingFlags.Instance, null, new Type[] { type, type }, null);
-			
-			return c;
+			return new Tuple<Expression, MethodInfo>(
+				c,
+				c.Type.GetMethod("Compare", BindingFlags.Public | BindingFlags.Instance, null, new Type[] { type, type }, null));
 		}
 		
 		/// <summary>
-		/// Returns an expression that evaluates to Smooth.Collections.EqualityComparer<T>.Default for the runtime type of Type.
-		/// The out equals parameter will contain a MethodInfo for the returned expression's Equals(T, T) method.
-		/// The out hashCode parameter will contain a MethodInfo for the returned expression's GetHashCode(T) method.
+		/// Returns a tuple containing:
+		/// an expression for the default equality comparer for type T, and
+		/// a MethodInfo for the comparer's Equals(T, T) method, and
+		/// a MethodInfo for the comparer's GetHashCode(T) method.
 		/// </summary>
-		public static Expression ExistingEqualityComparer(Type type, out MethodInfo equals, out MethodInfo hashCode) {
+		public static Tuple<Expression, MethodInfo, MethodInfo> ExistingEqualityComparer<T>() {
+			return ExistingEqualityComparer(typeof(T));
+		}
+
+		/// <summary>
+		/// Returns a tuple containing:
+		/// an expression for the default equality comparer for the specified type, and
+		/// a MethodInfo for the comparer's Equals(T, T) method, and
+		/// a MethodInfo for the comparer's GetHashCode(T) method.
+		/// </summary>
+		public static Tuple<Expression, MethodInfo, MethodInfo> ExistingEqualityComparer(Type type) {
 			var pi = typeof(Smooth.Collections.EqualityComparer<>).MakeGenericType(type).GetProperty(
 				"Default",
 				BindingFlags.Public | BindingFlags.Static,
@@ -154,11 +175,11 @@ namespace Smooth.Compare {
 				null);
 			
 			var ec = Expression.Property(null, pi);
-			
-			equals = ec.Type.GetMethod("Equals", BindingFlags.Public | BindingFlags.Instance, null, new Type[] { type, type }, null);
-			hashCode = ec.Type.GetMethod("GetHashCode", BindingFlags.Public | BindingFlags.Instance, null, new Type[] { type }, null);
-			
-			return ec;
+
+			return new Tuple<Expression, MethodInfo, MethodInfo>(
+				ec,
+				ec.Type.GetMethod("Equals", BindingFlags.Public | BindingFlags.Instance, null, new Type[] { type, type }, null),
+				ec.Type.GetMethod("GetHashCode", BindingFlags.Public | BindingFlags.Instance, null, new Type[] { type }, null));
 		}
 		
 		#endregion
@@ -175,14 +196,11 @@ namespace Smooth.Compare {
 			var valueL = Expression.Property(l, "Value");
 			var valueR = Expression.Property(r, "Value");
 			
-			MethodInfo miKeysCompare;
-			var keyComparer = ExistingComparer(keyL.Type, out miKeysCompare);
-			
-			MethodInfo miValuesCompare;
-			var valueComparer = ExistingComparer(valueL.Type, out miValuesCompare);
+			var keyComparer = ExistingComparer(keyL.Type);
+			var valueComparer = ExistingComparer(valueL.Type);
 
-			var keysCompared = Expression.Lambda<Comparison<T>>(Expression.Call(keyComparer, miKeysCompare, keyL, keyR), l, r).Compile();
-			var valuesCompared = Expression.Lambda<Comparison<T>>(Expression.Call(valueComparer, miValuesCompare, valueL, valueR), l, r).Compile();
+			var keysCompared = Expression.Lambda<Comparison<T>>(Expression.Call(keyComparer._1, keyComparer._2, keyL, keyR), l, r).Compile();
+			var valuesCompared = Expression.Lambda<Comparison<T>>(Expression.Call(valueComparer._1, valueComparer._2, valueL, valueR), l, r).Compile();
 
 			return new FuncComparer<T>((lhs, rhs) => { var c = keysCompared(lhs, rhs); return c == 0 ? valuesCompared(lhs, rhs) : c; });
 		}
@@ -211,21 +229,16 @@ namespace Smooth.Compare {
 			var valueL = Expression.Property(l, "Value");
 			var valueR = Expression.Property(r, "Value");
 
-			MethodInfo miKeysEqual;
-			MethodInfo miKeyHashCode;
-			var keyComparer = ExistingEqualityComparer(keyL.Type, out miKeysEqual, out miKeyHashCode);
+			var keyComparer = ExistingEqualityComparer(keyL.Type);
+			var valueComparer = ExistingEqualityComparer(valueL.Type);
 
-			MethodInfo miValuesEqual;
-			MethodInfo miValueHashCode;
-			var valueComparer = ExistingEqualityComparer(valueL.Type, out miValuesEqual, out miValueHashCode);
-
-			var keysEqual = Expression.Call(keyComparer, miKeysEqual, keyL, keyR);
-			var valuesEqual = Expression.Call(valueComparer, miValuesEqual, valueL, valueR);
+			var keysEqual = Expression.Call(keyComparer._1, keyComparer._2, keyL, keyR);
+			var valuesEqual = Expression.Call(valueComparer._1, valueComparer._2, valueL, valueR);
 
 			var equals = Expression.And(keysEqual, valuesEqual);
 
-			var hashCodeKey = Expression.Call(keyComparer, miKeyHashCode, keyL);
-			var hashCodeValue = Expression.Call(valueComparer, miValueHashCode, valueL);
+			var hashCodeKey = Expression.Call(keyComparer._1, keyComparer._3, keyL);
+			var hashCodeValue = Expression.Call(valueComparer._1, valueComparer._3, valueL);
 
 			var hashCode = HashCodeSeed();
 			var hashCodeStepMultiplier = HashCodeStepMultiplier();
