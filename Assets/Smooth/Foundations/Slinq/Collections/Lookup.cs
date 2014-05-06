@@ -55,7 +55,7 @@ namespace Smooth.Slinq.Collections {
 			}
 
 			if (dictionary.Count > 0) {
-				UnityEngine.Debug.LogWarning("Lookup had dictionary keys that were not in the key list.");
+				Debugging.Debug.LogWarning("Lookup had dictionary keys that were not in the key list.");
 				foreach (var values in dictionary.Values) {
 					valuesAcc.Append(values);
 				}

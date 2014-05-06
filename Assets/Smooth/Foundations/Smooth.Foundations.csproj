@@ -18,7 +18,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;FULL_RUNTIME</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -62,21 +62,19 @@
     <Compile Include="Compare\Examples\ExampleConfiguration.cs" />
     <Compile Include="Compare\Factory.cs" />
     <Compile Include="Compare\Finder.cs" />
-    <Compile Include="Compare\Utilities\LogUnregisteredOnDestroy.cs" />
     <Compile Include="Comparisons\Comparisons.cs" />
     <Compile Include="Comparisons\FuncComparer.cs" />
     <Compile Include="Comparisons\FuncEqualityComparer.cs" />
     <Compile Include="Comparisons\IComparableComparer.cs" />
     <Compile Include="Comparisons\IEquatableEqualityComparer.cs" />
+    <Compile Include="Debugging\Debug.cs" />
     <Compile Include="Delegates\DelegateExtensions.cs" />
     <Compile Include="Delegates\Delegates.cs" />
     <Compile Include="Delegates\Tupled.cs" />
     <Compile Include="Dispose\Disposable.cs" />
     <Compile Include="Dispose\DisposalQueue.cs" />
-    <Compile Include="Dispose\SmoothDisposer.cs" />
     <Compile Include="Events\GenericEvents.cs" />
-    <Compile Include="Platform\BasePlatform.cs" />
-    <Compile Include="Platform\Runtime.cs" />
+    <Compile Include="Platform\Runtime.FullRuntime.cs" />
     <Compile Include="Pools\KeyedPool.cs" />
     <Compile Include="Pools\KeyedPoolWithDefaultKey.cs" />
     <Compile Include="Pools\Pool.cs" />
@@ -113,33 +111,11 @@
     <Compile Include="Slinq\Context\Simple\OptionContext.cs" />
     <Compile Include="Slinq\Slinq.cs" />
     <Compile Include="Slinq\Slinqable.cs" />
-    <Compile Include="Slinq\Test\DistinctLinq.cs" />
-    <Compile Include="Slinq\Test\DistinctSlinq.cs" />
-    <Compile Include="Slinq\Test\ExceptLinq.cs" />
-    <Compile Include="Slinq\Test\ExceptSlinq.cs" />
-    <Compile Include="Slinq\Test\GroupByLinq.cs" />
-    <Compile Include="Slinq\Test\GroupBySlinq.cs" />
-    <Compile Include="Slinq\Test\GroupJoinLinq.cs" />
-    <Compile Include="Slinq\Test\GroupJoinSlinq.cs" />
-    <Compile Include="Slinq\Test\IntersectLinq.cs" />
-    <Compile Include="Slinq\Test\IntersectSlinq.cs" />
-    <Compile Include="Slinq\Test\JoinLinq.cs" />
-    <Compile Include="Slinq\Test\JoinSlinq.cs" />
-    <Compile Include="Slinq\Test\OrderByLinq.cs" />
-    <Compile Include="Slinq\Test\OrderBySlinq.cs" />
-    <Compile Include="Slinq\Test\SlinqTest.cs" />
-    <Compile Include="Slinq\Test\UnionLinq.cs" />
-    <Compile Include="Slinq\Test\UnionSlinq.cs" />
-    <Compile Include="Slinq\Test\WhereTakeSelectAggregateLinq.cs" />
-    <Compile Include="Slinq\Test\WhereTakeSelectAggregateSlinq.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="__Foundations-Git-Readme.txt" />
     <Content Include="__Foundations-License.txt" />
     <Content Include="__Foundations-Version.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Slinq\Test\SlinqTest.unity" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

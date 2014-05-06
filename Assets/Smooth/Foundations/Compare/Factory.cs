@@ -1,4 +1,3 @@
-using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -97,7 +96,7 @@ namespace Smooth.Compare {
 				}
 			} catch (InvalidOperationException) {
 			} catch (Exception e) {
-				Debug.LogError(e);
+                Debugging.Debug.LogError(e);
 			}
 			
 			try {
@@ -113,7 +112,7 @@ namespace Smooth.Compare {
 					return new Option<Expression>(Expression.Call(l, mi, r));
 				}
 			} catch (Exception e) {
-				Debug.LogError(e);
+                Debugging.Debug.LogError(e);
 			}
 			
 			return Option<Expression>.None;

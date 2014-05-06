@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿#if !FULL_RUNTIME
+using UnityEngine;
+#endif
+
 using System;
 using System.Collections.Generic;
 using System.Runtime;
@@ -35,7 +38,9 @@ namespace Smooth.Compare {
 		public virtual void RegisterComparers() {
 			#region Common structs without type specific equality and/or hashcode methods
 			
+#if !FULL_RUNTIME
 			Finder.Register<Color32>((a, b) => Color32ToInt(a) == Color32ToInt(b), Color32ToInt);
+#endif
 			
 			#endregion
 			
@@ -91,6 +96,7 @@ namespace Smooth.Compare {
 				// Thus they should not be used as Dictionary keys or in other use cases that rely on a correct equality implementation.
 				//
 				
+#if !FULL_RUNTIME
 				Finder.Register<Color>((a, b) => a == b);
 				
 				Finder.Register<Vector2>((a, b) => a == b);
@@ -98,23 +104,28 @@ namespace Smooth.Compare {
 				Finder.Register<Vector4>((a, b) => a == b);
 				
 				Finder.Register<Quaternion>((a, b) => a == b);
+#endif
 				
 				#endregion
 				
 				#region UnityEngine enums
 				
+#if !FULL_RUNTIME
 				Finder.RegisterEnum<AudioSpeakerMode>();
 				Finder.RegisterEnum<EventModifiers>();
 				Finder.RegisterEnum<UnityEngine.EventType>();
 				Finder.RegisterEnum<KeyCode>();
 				Finder.RegisterEnum<PrimitiveType>();
 				Finder.RegisterEnum<RuntimePlatform>();
+#endif
 
 				#endregion
 
 				#region Smooth enums
 				
+#if !FULL_RUNTIME
 				Finder.RegisterEnum<BasePlatform>();
+#endif
 				Finder.RegisterEnum<ComparerType>();
 				Finder.RegisterEnum<EventType>();
 
@@ -133,17 +144,17 @@ namespace Smooth.Compare {
 			switch (eventType) {
 			case EventType.FindUnregistered:
 				if (NoJit && type.IsValueType) {
-					Debug.LogWarning("A " + comparerType.ToStringCached() + " has been requested for a non-registered value type with JIT disabled, this is a fragile operation and may result in a JIT exception.\nType:" + type.FullName);
+					Debugging.Debug.LogWarning("A " + comparerType.ToStringCached() + " has been requested for a non-registered value type with JIT disabled, this is a fragile operation and may result in a JIT exception.\nType:" + type.FullName);
 				}
 				break;
 			case EventType.InefficientDefault:
-				Debug.LogWarning("A " + comparerType.ToStringCached() + " has been requested that will perform inefficient comparisons and/or cause boxing allocations.\nType:" + type.FullName);
+				Debugging.Debug.LogWarning("A " + comparerType.ToStringCached() + " has been requested that will perform inefficient comparisons and/or cause boxing allocations.\nType:" + type.FullName);
 				break;
 			case EventType.InvalidDefault:
-				Debug.LogWarning("A " + comparerType.ToStringCached() + " has been requested for a non-comparable type.  Using the comparer will cause exceptions.\nType:" + type.FullName);
+				Debugging.Debug.LogWarning("A " + comparerType.ToStringCached() + " has been requested for a non-comparable type.  Using the comparer will cause exceptions.\nType:" + type.FullName);
 				break;
 			case EventType.AlreadyRegistered:
-				Debug.LogWarning("Tried to register a " + comparerType.ToStringCached() + " over an existing registration.\nType: " + type.FullName);
+				Debugging.Debug.LogWarning("Tried to register a " + comparerType.ToStringCached() + " over an existing registration.\nType: " + type.FullName);
 				break;
 			default:
 				break;
@@ -180,11 +191,13 @@ namespace Smooth.Compare {
 			return Factory.EqualityComparer<T>();
 		}
 
+#if !FULL_RUNTIME
 		/// <summary>
 		/// Converts a 32-bit color to a 32-bit integer without loss of information
 		/// </summary>
 		public static int Color32ToInt(Color32 c) {
 			return (c.r << 24) | (c.g << 16) | (c.b << 8) | c.a;
 		}
+#endif
 	}
 }
