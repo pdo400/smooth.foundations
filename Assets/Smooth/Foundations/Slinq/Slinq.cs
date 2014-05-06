@@ -81,7 +81,7 @@ namespace Smooth.Slinq {
 		public Option<T> current;
 
 		/// <summary>
-		/// Moves the Slinq to the next element in the enumeration.  If the Slinq is empty this will have no effect.  If the Skip() call completes the enumeration, the Slinq will automatically be disposed.
+		/// Moves the Slinq to the next element in the enumeration.  If the Slinq is empty this will have no effect.
 		/// </summary>
 		public void Skip() {
 			if (current.isSome) {
@@ -90,7 +90,17 @@ namespace Smooth.Slinq {
 		}
 
 		/// <summary>
-		/// Removes the current element from the underlying sequence and moves the Slinq to the next element in the enumeration.  If the Slinq is empty this will have no effect.  If the Remove() call completes the enumeration, the Slinq will automatically be disposed.
+		/// Moves the Slinq to the next element in the enumeration and returns the Slinq.  If the Slinq is empty this will have no effect.
+		/// </summary>
+		public Slinq<T, C> SkipAndReturn() {
+			if (current.isSome) {
+				skip(ref context, out current);
+			}
+			return this;
+		}
+		
+		/// <summary>
+		/// Removes the current element from the underlying sequence and moves the Slinq to the next element in the enumeration.  If the Slinq is empty this will have no effect.
 		/// </summary>
 		/// <exception cref="NotSupportedException">The Slinq or an underlying Slinq in the chain does not support element removal.</exception>
 		public void Remove() {
@@ -100,9 +110,20 @@ namespace Smooth.Slinq {
 		}
 		
 		/// <summary>
+		/// Removes the current element from the underlying sequence, moves the Slinq to the next element in the enumeration, and returns the Slinq.  If the Slinq is empty this will have no effect.
+		/// </summary>
+		/// <exception cref="NotSupportedException">The Slinq or an underlying Slinq in the chain does not support element removal.</exception>
+		public Slinq<T, C> RemoveAndReturn() {
+			if (current.isSome) {
+				remove(ref context, out current);
+			}
+			return this;
+		}
+		
+		/// <summary>
 		/// Sets the current value of the Slinq to None and releases any shared resources held by the Slinq.  If the Slinq is empty this will have no effect.
 		/// 
-		/// If you are done with a Slinq that still contains values, you must call Dispose to ensure the release and/or disposal of any resources held by the Slinq.
+		/// Slinqs are automatically disposed when they become empty, but if you are done with a Slinq that still contains values, you must call Dispose to ensure the release and/or disposal of any resources held by the Slinq.
 		/// </summary>
 		public void Dispose() {
 			if (current.isSome) {
@@ -206,47 +227,56 @@ namespace Smooth.Slinq {
 		#region Parameterized removes
 		
 		/// <summary>
-		/// Enumerates the remaining elements from the Slinq and removes them from the underlying sequence.
+		/// Enumerates the remaining elements from the Slinq, removes them from the underlying sequence, and returns the number of elements removed.
 		/// 
 		/// This operation will consume and dispose the Slinq.
 		/// </summary>
 		/// <exception cref="NotSupportedException">The Slinq or an underlying Slinq in the chain does not support element removal.</exception>
-		public void RemoveAll() {
+		public int RemoveAll() {
+			var count = 0;
 			while (current.isSome) {
 				remove(ref context, out current);
+				++count;
 			}
+			return count;
 		}
 		
 		/// <summary>
-		/// Enumerates the remaining elements from the Slinq and removes them from the underlying sequence.
+		/// Enumerates the remaining elements from the Slinq, removes them from the underlying sequence, and returns the number of elements removed.
 		/// 
 		/// After an element is removed the specified then action will be called with the element.
 		/// 
 		/// This operation will consume and dispose the Slinq.
 		/// </summary>
 		/// <exception cref="NotSupportedException">The Slinq or an underlying Slinq in the chain does not support element removal.</exception>
-		public void RemoveAll(DelegateAction<T> then) {
+		public int RemoveAll(DelegateAction<T> then) {
+			var count = 0;
 			while (current.isSome) {
 				var removed = current.value;
 				remove(ref context, out current);
 				then(removed);
+				++count;
 			}
+			return count;
 		}
 		
 		/// <summary>
-		/// Enumerates the remaining elements from the Slinq and removes them from the underlying sequence.
+		/// Enumerates the remaining elements from the Slinq, removes them from the underlying sequence, and returns the number of elements removed.
 		/// 
 		/// After an element is removed the specified then action will be called with the element and the specified then parameter.
 		/// 
 		/// This operation will consume and dispose the Slinq.
 		/// </summary>
 		/// <exception cref="NotSupportedException">The Slinq or an underlying Slinq in the chain does not support element removal.</exception>
-		public void RemoveAll<P>(DelegateAction<T, P> then, P thenParameter) {
+		public int RemoveAll<P>(DelegateAction<T, P> then, P thenParameter) {
+			var count = 0;
 			while (current.isSome) {
 				var removed = current.value;
 				remove(ref context, out current);
 				then(removed, thenParameter);
+				++count;
 			}
+			return count;
 		}
 		
 		/// <summary>
