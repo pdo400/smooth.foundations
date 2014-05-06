@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{48AF98C7-551A-4EBA-B5BA-EC4D9C86CC95}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Smooth</RootNamespace>
+    <AssemblyName>Smooth.Foundations</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Compile Include="Algebraics\Either.cs" />
+    <Compile Include="Algebraics\Option.cs" />
+    <Compile Include="Algebraics\Tuple.cs" />
+    <Compile Include="Algebraics\Unit.cs" />
+    <Compile Include="Collections\Comparer.cs" />
+    <Compile Include="Collections\CreateWithComparer.cs" />
+    <Compile Include="Collections\EqualityComparer.cs" />
+    <Compile Include="Collections\FuncEnumerable.cs" />
+    <Compile Include="Collections\ICollectionExtensions.cs" />
+    <Compile Include="Collections\IDictionaryExtensions.cs" />
+    <Compile Include="Collections\IListExtensions.cs" />
+    <Compile Include="Collections\IListStepper.cs" />
+    <Compile Include="Collections\InspectorKeyValuePair.cs" />
+    <Compile Include="Collections\LinkedListStepper.cs" />
+    <Compile Include="Compare\Comparers\EnumComparers.cs" />
+    <Compile Include="Compare\Comparers\KeyValuePairComparers.cs" />
+    <Compile Include="Compare\Configuration.cs" />
+    <Compile Include="Compare\Events.cs" />
+    <Compile Include="Compare\Examples\ExampleConfiguration.cs" />
+    <Compile Include="Compare\Factory.cs" />
+    <Compile Include="Compare\Finder.cs" />
+    <Compile Include="Compare\Utilities\LogUnregisteredOnDestroy.cs" />
+    <Compile Include="Comparisons\Comparisons.cs" />
+    <Compile Include="Comparisons\FuncComparer.cs" />
+    <Compile Include="Comparisons\FuncEqualityComparer.cs" />
+    <Compile Include="Comparisons\IComparableComparer.cs" />
+    <Compile Include="Comparisons\IEquatableEqualityComparer.cs" />
+    <Compile Include="Delegates\DelegateExtensions.cs" />
+    <Compile Include="Delegates\Delegates.cs" />
+    <Compile Include="Delegates\Tupled.cs" />
+    <Compile Include="Dispose\Disposable.cs" />
+    <Compile Include="Dispose\DisposalQueue.cs" />
+    <Compile Include="Dispose\SmoothDisposer.cs" />
+    <Compile Include="Events\GenericEvents.cs" />
+    <Compile Include="Platform\BasePlatform.cs" />
+    <Compile Include="Platform\Runtime.cs" />
+    <Compile Include="Pools\KeyedPool.cs" />
+    <Compile Include="Pools\KeyedPoolWithDefaultKey.cs" />
+    <Compile Include="Pools\Pool.cs" />
+    <Compile Include="Pools\PoolWithInitializer.cs" />
+    <Compile Include="Pools\SystemPools.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Slinq\Collections\Grouping.cs" />
+    <Compile Include="Slinq\Collections\Linked.cs" />
+    <Compile Include="Slinq\Collections\Lookup.cs" />
+    <Compile Include="Slinq\Context\ChainedOrPooled\AggregateContext.cs" />
+    <Compile Include="Slinq\Context\ChainedOrPooled\ConcatContext.cs" />
+    <Compile Include="Slinq\Context\ChainedOrPooled\EitherContext.cs" />
+    <Compile Include="Slinq\Context\ChainedOrPooled\FlattenContext.cs" />
+    <Compile Include="Slinq\Context\ChainedOrPooled\GroupByContext.cs" />
+    <Compile Include="Slinq\Context\ChainedOrPooled\GroupJoinContext.cs" />
+    <Compile Include="Slinq\Context\ChainedOrPooled\HashSetContext.cs" />
+    <Compile Include="Slinq\Context\ChainedOrPooled\IntContext.cs" />
+    <Compile Include="Slinq\Context\ChainedOrPooled\JoinContext.cs" />
+    <Compile Include="Slinq\Context\ChainedOrPooled\LinkedContext.cs" />
+    <Compile Include="Slinq\Context\ChainedOrPooled\PredicateContext.cs" />
+    <Compile Include="Slinq\Context\ChainedOrPooled\SelectContext.cs" />
+    <Compile Include="Slinq\Context\ChainedOrPooled\SelectOptionContext.cs" />
+    <Compile Include="Slinq\Context\ChainedOrPooled\SelectSlinqContext.cs" />
+    <Compile Include="Slinq\Context\ChainedOrPooled\ZipAllContext.cs" />
+    <Compile Include="Slinq\Context\ChainedOrPooled\ZipContext.cs" />
+    <Compile Include="Slinq\Context\Mutation\BacktrackDetector.cs" />
+    <Compile Include="Slinq\Context\Mutation\BacktrackException.cs" />
+    <Compile Include="Slinq\Context\Mutation\Mutator.cs" />
+    <Compile Include="Slinq\Context\Simple\FuncContext.cs" />
+    <Compile Include="Slinq\Context\Simple\FuncOptionContext.cs" />
+    <Compile Include="Slinq\Context\Simple\IEnumerableContext.cs" />
+    <Compile Include="Slinq\Context\Simple\IListContext.cs" />
+    <Compile Include="Slinq\Context\Simple\LinkedListContext.cs" />
+    <Compile Include="Slinq\Context\Simple\OptionContext.cs" />
+    <Compile Include="Slinq\Slinq.cs" />
+    <Compile Include="Slinq\Slinqable.cs" />
+    <Compile Include="Slinq\Test\DistinctLinq.cs" />
+    <Compile Include="Slinq\Test\DistinctSlinq.cs" />
+    <Compile Include="Slinq\Test\ExceptLinq.cs" />
+    <Compile Include="Slinq\Test\ExceptSlinq.cs" />
+    <Compile Include="Slinq\Test\GroupByLinq.cs" />
+    <Compile Include="Slinq\Test\GroupBySlinq.cs" />
+    <Compile Include="Slinq\Test\GroupJoinLinq.cs" />
+    <Compile Include="Slinq\Test\GroupJoinSlinq.cs" />
+    <Compile Include="Slinq\Test\IntersectLinq.cs" />
+    <Compile Include="Slinq\Test\IntersectSlinq.cs" />
+    <Compile Include="Slinq\Test\JoinLinq.cs" />
+    <Compile Include="Slinq\Test\JoinSlinq.cs" />
+    <Compile Include="Slinq\Test\OrderByLinq.cs" />
+    <Compile Include="Slinq\Test\OrderBySlinq.cs" />
+    <Compile Include="Slinq\Test\SlinqTest.cs" />
+    <Compile Include="Slinq\Test\UnionLinq.cs" />
+    <Compile Include="Slinq\Test\UnionSlinq.cs" />
+    <Compile Include="Slinq\Test\WhereTakeSelectAggregateLinq.cs" />
+    <Compile Include="Slinq\Test\WhereTakeSelectAggregateSlinq.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="__Foundations-Git-Readme.txt" />
+    <Content Include="__Foundations-License.txt" />
+    <Content Include="__Foundations-Version.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Slinq\Test\SlinqTest.unity" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
