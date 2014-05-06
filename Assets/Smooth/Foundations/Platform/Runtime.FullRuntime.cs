@@ -9,9 +9,25 @@ namespace Smooth.Platform {
 	public static class Runtime {
 
 		/// <summary>
+		/// Returns the base platform for this application.
+		/// </summary>
+		private static BasePlatform GetBasePlatform() {
+			switch (Environment.OSVersion.Platform) {
+				case PlatformID.Unix: return BasePlatform.Linux;
+				case PlatformID.MacOSX: return BasePlatform.Osx;
+				default: return BasePlatform.Windows;
+			}
+		}
+
+		/// <summary>
+		/// The base platform of the target runtime.
+		/// </summary>
+		public static readonly BasePlatform basePlatform = GetBasePlatform();
+		
+		/// <summary>
 		/// True if the base platform supports JIT compilation; otherwise false.
 		/// </summary>
-		public static readonly bool hasJit = true;
+		public static readonly bool hasJit = basePlatform.HasJit();
 
 		/// <summary>
 		/// True if the base platform does not support JIT compilation; otherwise false.

@@ -74,6 +74,9 @@
     <Compile Include="Dispose\Disposable.cs" />
     <Compile Include="Dispose\DisposalQueue.cs" />
     <Compile Include="Events\GenericEvents.cs" />
+    <Compile Include="Platform\BasePlatform.FullRuntime.cs" />
+    <Compile Include="Platform\BasePlatform.Unity.cs" />
+    <Compile Include="Platform\Runtime.Unity.cs" />
     <Compile Include="Platform\Runtime.FullRuntime.cs" />
     <Compile Include="Pools\KeyedPool.cs" />
     <Compile Include="Pools\KeyedPoolWithDefaultKey.cs" />
