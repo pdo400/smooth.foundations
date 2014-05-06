@@ -88,6 +88,7 @@ namespace Smooth.Compare {
 				
 				#endregion
 				
+#if !FULL_RUNTIME
 				#region UnityEngine structs
 				
 				//
@@ -96,7 +97,6 @@ namespace Smooth.Compare {
 				// Thus they should not be used as Dictionary keys or in other use cases that rely on a correct equality implementation.
 				//
 				
-#if !FULL_RUNTIME
 				Finder.Register<Color>((a, b) => a == b);
 				
 				Finder.Register<Vector2>((a, b) => a == b);
@@ -104,28 +104,24 @@ namespace Smooth.Compare {
 				Finder.Register<Vector4>((a, b) => a == b);
 				
 				Finder.Register<Quaternion>((a, b) => a == b);
-#endif
-				
-				#endregion
+
+                #endregion
 				
 				#region UnityEngine enums
 				
-#if !FULL_RUNTIME
 				Finder.RegisterEnum<AudioSpeakerMode>();
 				Finder.RegisterEnum<EventModifiers>();
 				Finder.RegisterEnum<UnityEngine.EventType>();
 				Finder.RegisterEnum<KeyCode>();
 				Finder.RegisterEnum<PrimitiveType>();
 				Finder.RegisterEnum<RuntimePlatform>();
-#endif
 
 				#endregion
-
-				#region Smooth enums
-				
-#if !FULL_RUNTIME
-				Finder.RegisterEnum<BasePlatform>();
 #endif
+
+                #region Smooth enums
+
+                Finder.RegisterEnum<BasePlatform>();
 				Finder.RegisterEnum<ComparerType>();
 				Finder.RegisterEnum<EventType>();
 

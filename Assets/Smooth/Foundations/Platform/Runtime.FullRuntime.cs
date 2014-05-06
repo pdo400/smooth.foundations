@@ -13,9 +13,12 @@ namespace Smooth.Platform {
 		/// </summary>
 		private static BasePlatform GetBasePlatform() {
 			switch (Environment.OSVersion.Platform) {
-				case PlatformID.Unix: return BasePlatform.Linux;
-				case PlatformID.MacOSX: return BasePlatform.Osx;
-				default: return BasePlatform.Windows;
+				case PlatformID.Unix: 
+					return BasePlatform.Linux;
+				case PlatformID.MacOSX: 
+					return BasePlatform.Osx;
+				default:
+					return BasePlatform.Windows;
 			}
 		}
 

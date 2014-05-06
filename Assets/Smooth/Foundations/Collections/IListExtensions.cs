@@ -34,16 +34,17 @@ namespace Smooth.Collections {
 		}
 
 #if FULL_RUNTIME
-		private static readonly Random random = new Random();
-#endif
+		private static readonly System.Threading.ThreadLocal<Random> random = 
+            new System.Threading.ThreadLocal<Random>(() => new Random());
 
-		private static Int32 RandomRange(Int32 min, Int32 max) {
-#if FULL_RUNTIME
-			return random.Next(min, max);
+        private static Int32 RandomRange(Int32 min, Int32 max) {
+			return random.Value.Next(min, max);
+        }
 #else
+		private static Int32 RandomRange(Int32 min, Int32 max) {
 			return UnityEngine.Random.Range(i, count);
-#endif
 		}
+#endif
 
 		#endregion
 		

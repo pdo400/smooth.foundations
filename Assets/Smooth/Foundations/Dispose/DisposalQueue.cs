@@ -57,11 +57,15 @@ namespace Smooth.Dispose {
 			}
 		}
 
-#if !FULL_RUNTIME
 		static DisposalQueue() {
+#if FULL_RUNTIME
+            var t = new Thread(Dispose);
+            t.IsBackground = true;
+            t.Start();
+#else
 			new Thread(new ThreadStart(Dispose)).Start();
 			new UnityEngine.GameObject(typeof(SmoothDisposer).Name).AddComponent<SmoothDisposer>();
-		}
 #endif
+        }
 	}
 }
