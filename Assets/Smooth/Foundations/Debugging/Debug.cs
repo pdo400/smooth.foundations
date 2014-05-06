@@ -8,7 +8,7 @@ namespace Smooth.Debugging {
 
         public static void LogError(Exception error) {
 #if FULL_RUNTIME
-            // TODO
+            System.Diagnostics.Debug.Write(error);
 #else
             UnityEngine.Debug.LogError(error);				
 #endif
@@ -16,7 +16,7 @@ namespace Smooth.Debugging {
 
         public static void LogError(String error) {
 #if FULL_RUNTIME
-            // TODO
+            System.Diagnostics.Debug.Write(error);
 #else
             UnityEngine.Debug.LogError(error);				
 #endif
@@ -24,7 +24,7 @@ namespace Smooth.Debugging {
 
         public static void LogWarning(String warning) {
 #if FULL_RUNTIME
-            // TODO
+            System.Diagnostics.Debug.Write(warning);
 #else
             UnityEngine.Debug.LogWarning(warning);				
 #endif
