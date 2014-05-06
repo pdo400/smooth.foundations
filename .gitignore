@@ -1,0 +1,10 @@
+.DS_Store
+*.meta
+
+/*
+!/.gitignore
+!/Assets/
+/Assets/*
+!/Assets/Smooth
+/Assets/Smooth/*
+!/Assets/Smooth/Foundations
