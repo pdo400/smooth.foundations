@@ -1,4 +1,4 @@
-﻿#if !FULL_RUNTIME
+﻿#if !STANDARD_RUNTIME
 using UnityEngine;
 #endif
 
@@ -38,7 +38,7 @@ namespace Smooth.Compare {
 		public virtual void RegisterComparers() {
 			#region Common structs without type specific equality and/or hashcode methods
 			
-#if !FULL_RUNTIME
+#if !STANDARD_RUNTIME
 			Finder.Register<Color32>((a, b) => Color32ToInt(a) == Color32ToInt(b), Color32ToInt);
 #endif
 			
@@ -88,7 +88,7 @@ namespace Smooth.Compare {
 				
 				#endregion
 				
-#if !FULL_RUNTIME
+#if !STANDARD_RUNTIME
 				#region UnityEngine structs
 				
 				//
@@ -187,7 +187,7 @@ namespace Smooth.Compare {
 			return Factory.EqualityComparer<T>();
 		}
 
-#if !FULL_RUNTIME
+#if !STANDARD_RUNTIME
 		/// <summary>
 		/// Converts a 32-bit color to a 32-bit integer without loss of information
 		/// </summary>

@@ -18,7 +18,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;FULL_RUNTIME</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;STANDARD_RUNTIME</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -26,7 +26,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;FULL_RUNTIME</DefineConstants>
+    <DefineConstants>TRACE;STANDARD_RUNTIME</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -74,10 +74,10 @@
     <Compile Include="Dispose\Disposable.cs" />
     <Compile Include="Dispose\DisposalQueue.cs" />
     <Compile Include="Events\GenericEvents.cs" />
-    <Compile Include="Platform\BasePlatform.FullRuntime.cs" />
+    <Compile Include="Platform\BasePlatform.StandardRuntime.cs" />
     <Compile Include="Platform\BasePlatform.Unity.cs" />
     <Compile Include="Platform\Runtime.Unity.cs" />
-    <Compile Include="Platform\Runtime.FullRuntime.cs" />
+    <Compile Include="Platform\Runtime.StandardRuntime.cs" />
     <Compile Include="Pools\KeyedPool.cs" />
     <Compile Include="Pools\KeyedPoolWithDefaultKey.cs" />
     <Compile Include="Pools\Pool.cs" />

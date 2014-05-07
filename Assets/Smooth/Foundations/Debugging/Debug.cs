@@ -7,7 +7,7 @@ namespace Smooth.Debugging {
     public static class Debug {
 
         public static void LogError(Exception error) {
-#if FULL_RUNTIME
+#if STANDARD_RUNTIME
             System.Diagnostics.Debug.Write(error);
 #else
             UnityEngine.Debug.LogError(error);				
@@ -15,7 +15,7 @@ namespace Smooth.Debugging {
         }
 
         public static void LogError(String error) {
-#if FULL_RUNTIME
+#if STANDARD_RUNTIME
             System.Diagnostics.Debug.Write(error);
 #else
             UnityEngine.Debug.LogError(error);				
@@ -23,7 +23,7 @@ namespace Smooth.Debugging {
         }
 
         public static void LogWarning(String warning) {
-#if FULL_RUNTIME
+#if STANDARD_RUNTIME
             System.Diagnostics.Debug.Write(warning);
 #else
             UnityEngine.Debug.LogWarning(warning);				

@@ -1,4 +1,4 @@
-#if !FULL_RUNTIME
+#if !STANDARD_RUNTIME
 using UnityEngine;
 using System;
 

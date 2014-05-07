@@ -58,7 +58,7 @@ namespace Smooth.Dispose {
 		}
 
 		static DisposalQueue() {
-#if FULL_RUNTIME
+#if STANDARD_RUNTIME
             var t = new Thread(Dispose);
             t.IsBackground = true;
             t.Start();

@@ -33,7 +33,7 @@ namespace Smooth.Collections {
 			}
 		}
 
-#if FULL_RUNTIME
+#if STANDARD_RUNTIME
 		private static readonly System.Threading.ThreadLocal<Random> random = 
             new System.Threading.ThreadLocal<Random>(() => new Random());
 
