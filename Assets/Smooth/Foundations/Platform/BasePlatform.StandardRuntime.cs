@@ -8,9 +8,8 @@ namespace Smooth.Platform {
 	/// </summary>
 	public enum BasePlatform {
 		None = 0,
-		Linux = 500,
-		Osx = 800,
-		Windows = 1200,
+        Linux = 500,
+        Windows = 1200
 	}
 
 	/// <summary>
