@@ -42,7 +42,7 @@ namespace Smooth.Collections {
         }
 #else
 		private static Int32 RandomRange(Int32 min, Int32 max) {
-			return UnityEngine.Random.Range(i, count);
+			return UnityEngine.Random.Range(min, max);
 		}
 #endif
 
