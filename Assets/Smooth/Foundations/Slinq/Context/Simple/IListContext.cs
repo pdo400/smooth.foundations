@@ -15,8 +15,8 @@ namespace Smooth.Slinq.Context {
 				new IListContext<T>(list, startIndex, step));
 		}
 		
-		public static Slinq<Stuple<T, int>, IListContext<T>> SlinqWithIndex(IList<T> list, int startIndex, int step) {
-			return new Slinq<Stuple<T, int>, IListContext<T>>(
+		public static Slinq<Smooth.Algebraics.Tuple<T, int>, IListContext<T>> SlinqWithIndex(IList<T> list, int startIndex, int step) {
+			return new Slinq<Smooth.Algebraics.Tuple<T, int>, IListContext<T>>(
 				skipWithIndex,
 				removeWithIndex,
 				disposeWithIndex,
@@ -96,31 +96,31 @@ namespace Smooth.Slinq.Context {
 
 		#region Values with index
 
-		private static readonly Mutator<Stuple<T, int>, IListContext<T>> skipWithIndex = SkipWithIndex;
-		private static readonly Mutator<Stuple<T, int>, IListContext<T>> removeWithIndex = RemoveWithIndex;
-		private static readonly Mutator<Stuple<T, int>, IListContext<T>> disposeWithIndex = DisposeWithIndex;
+		private static readonly Mutator<Smooth.Algebraics.Tuple<T, int>, IListContext<T>> skipWithIndex = SkipWithIndex;
+		private static readonly Mutator<Smooth.Algebraics.Tuple<T, int>, IListContext<T>> removeWithIndex = RemoveWithIndex;
+		private static readonly Mutator<Smooth.Algebraics.Tuple<T, int>, IListContext<T>> disposeWithIndex = DisposeWithIndex;
 
-		private static void SkipWithIndex(ref IListContext<T> context, out Option<Stuple<T, int>> next) {
+		private static void SkipWithIndex(ref IListContext<T> context, out Option<Smooth.Algebraics.Tuple<T, int>> next) {
 			context.bd.DetectBacktrack();
 			
 			var index = context.index + context.step;
 			
 			if (0 <= index && index < context.size) {
-				next = new Option<Stuple<T, int>>(new Stuple<T, int>(context.list[index], index));
+				next = new Option<Smooth.Algebraics.Tuple<T, int>>(new Smooth.Algebraics.Tuple<T, int>(context.list[index], index));
 				context.index = index;
 			} else {
-				next = new Option<Stuple<T, int>>();
+				next = new Option<Smooth.Algebraics.Tuple<T, int>>();
 				context.bd.Release();
 			}
 		}
 		
-		private static void RemoveWithIndex(ref IListContext<T> context, out Option<Stuple<T, int>> next) {
+		private static void RemoveWithIndex(ref IListContext<T> context, out Option<Smooth.Algebraics.Tuple<T, int>> next) {
 			context.bd.DetectBacktrack();
 			
 			context.list.RemoveAt(context.index);
 
 			if (context.step == 0) {
-				next = new Option<Stuple<T, int>>();
+				next = new Option<Smooth.Algebraics.Tuple<T, int>>();
 				context.bd.Release();
 			} else {
 				if (context.step > 0) {
@@ -132,8 +132,8 @@ namespace Smooth.Slinq.Context {
 			}
 		}
 		
-		private static void DisposeWithIndex(ref IListContext<T> context, out Option<Stuple<T, int>> next) {
-			next = new Option<Stuple<T, int>>();
+		private static void DisposeWithIndex(ref IListContext<T> context, out Option<Smooth.Algebraics.Tuple<T, int>> next) {
+			next = new Option<Smooth.Algebraics.Tuple<T, int>>();
 			context.bd.Release();
 		}
 

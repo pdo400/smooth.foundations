@@ -31,7 +31,7 @@ namespace Smooth.Collections {
 	/// <summary>
 	/// Helper class for enuemrating the element, index pairs of an IList<T> using a start index and step value.
 	/// </summary>
-	public class IListStepperWithIndex<T> : IEnumerable<Stuple<T, int>> {
+	public class IListStepperWithIndex<T> : IEnumerable<Smooth.Algebraics.Tuple<T, int>> {
 		private readonly IList<T> list;
 		private readonly int startIndex;
 		private readonly int step;
@@ -44,9 +44,9 @@ namespace Smooth.Collections {
 			this.step = step;
 		}
 		
-		public IEnumerator<Stuple<T, int>> GetEnumerator() {
+		public IEnumerator<Smooth.Algebraics.Tuple<T, int>> GetEnumerator() {
 			for (int i = startIndex; 0 <= i && i < list.Count; i += step) {
-				yield return new Stuple<T, int>(list[i], i);
+				yield return new Smooth.Algebraics.Tuple<T, int>(list[i], i);
 			}
 		}
 		

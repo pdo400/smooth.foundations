@@ -43,7 +43,7 @@
   <ItemGroup>
     <Compile Include="Algebraics\Either.cs" />
     <Compile Include="Algebraics\Option.cs" />
-    <Compile Include="Algebraics\Stuple.cs" />
+    <Compile Include="Algebraics\Tuple.cs" />
     <Compile Include="Algebraics\Unit.cs" />
     <Compile Include="Collections\Comparer.cs" />
     <Compile Include="Collections\CreateWithComparer.cs" />
