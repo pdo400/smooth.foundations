@@ -10,7 +10,7 @@ namespace Smooth.Debugging {
 #if STANDARD_RUNTIME
             System.Diagnostics.Debug.WriteLine(message);
 #else
-            UnityEngine.Debug.LogError(error);				
+            UnityEngine.Debug.LogError(message);				
 #endif
         }
 
@@ -18,7 +18,7 @@ namespace Smooth.Debugging {
 #if STANDARD_RUNTIME
             System.Diagnostics.Debug.WriteLine(message);
 #else
-            UnityEngine.Debug.LogWarning(warning);				
+            UnityEngine.Debug.LogWarning(message);				
 #endif
         }
     }
