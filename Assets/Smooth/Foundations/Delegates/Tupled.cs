@@ -14,11 +14,11 @@ namespace Smooth.Delegates {
 	/// 
 	/// Could be written as:
 	/// 
-	/// option.Where((v, p) => TupleValued.Call((player, team, score) => player.team == team && player.score > score, v, p), TupleValue.Create(myTeam, myScore))
+	/// option.Where((v, p) => Tupled.Call((player, team, score) => player.team == team && player.score > score, v, p), TupleValue.Create(myTeam, myScore))
 	/// 
 	/// While this form is slightly longer and requires an extra method call, it can be useful as a "quick and dirty" way to use meaningful parameter names in complicated delegates.
 	/// </summary>
-	public static class TupleValued {
+	public static class Tupled {
 
 		#region Action, TupleValue
 
