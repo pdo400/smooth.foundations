@@ -15,8 +15,8 @@ namespace Smooth.Slinq.Context {
 				new IListContext<T>(list, startIndex, step));
 		}
 		
-		public static Slinq<Tuple<T, int>, IListContext<T>> SlinqWithIndex(IList<T> list, int startIndex, int step) {
-			return new Slinq<Tuple<T, int>, IListContext<T>>(
+		public static Slinq<TupleValue<T, int>, IListContext<T>> SlinqWithIndex(IList<T> list, int startIndex, int step) {
+			return new Slinq<TupleValue<T, int>, IListContext<T>>(
 				skipWithIndex,
 				removeWithIndex,
 				disposeWithIndex,
@@ -96,31 +96,31 @@ namespace Smooth.Slinq.Context {
 
 		#region Values with index
 
-		private static readonly Mutator<Tuple<T, int>, IListContext<T>> skipWithIndex = SkipWithIndex;
-		private static readonly Mutator<Tuple<T, int>, IListContext<T>> removeWithIndex = RemoveWithIndex;
-		private static readonly Mutator<Tuple<T, int>, IListContext<T>> disposeWithIndex = DisposeWithIndex;
+		private static readonly Mutator<TupleValue<T, int>, IListContext<T>> skipWithIndex = SkipWithIndex;
+		private static readonly Mutator<TupleValue<T, int>, IListContext<T>> removeWithIndex = RemoveWithIndex;
+		private static readonly Mutator<TupleValue<T, int>, IListContext<T>> disposeWithIndex = DisposeWithIndex;
 
-		private static void SkipWithIndex(ref IListContext<T> context, out Option<Tuple<T, int>> next) {
+		private static void SkipWithIndex(ref IListContext<T> context, out Option<TupleValue<T, int>> next) {
 			context.bd.DetectBacktrack();
 			
 			var index = context.index + context.step;
 			
 			if (0 <= index && index < context.size) {
-				next = new Option<Tuple<T, int>>(new Tuple<T, int>(context.list[index], index));
+				next = new Option<TupleValue<T, int>>(new TupleValue<T, int>(context.list[index], index));
 				context.index = index;
 			} else {
-				next = new Option<Tuple<T, int>>();
+				next = new Option<TupleValue<T, int>>();
 				context.bd.Release();
 			}
 		}
 		
-		private static void RemoveWithIndex(ref IListContext<T> context, out Option<Tuple<T, int>> next) {
+		private static void RemoveWithIndex(ref IListContext<T> context, out Option<TupleValue<T, int>> next) {
 			context.bd.DetectBacktrack();
 			
 			context.list.RemoveAt(context.index);
 
 			if (context.step == 0) {
-				next = new Option<Tuple<T, int>>();
+				next = new Option<TupleValue<T, int>>();
 				context.bd.Release();
 			} else {
 				if (context.step > 0) {
@@ -132,8 +132,8 @@ namespace Smooth.Slinq.Context {
 			}
 		}
 		
-		private static void DisposeWithIndex(ref IListContext<T> context, out Option<Tuple<T, int>> next) {
-			next = new Option<Tuple<T, int>>();
+		private static void DisposeWithIndex(ref IListContext<T> context, out Option<TupleValue<T, int>> next) {
+			next = new Option<TupleValue<T, int>>();
 			context.bd.Release();
 		}
 

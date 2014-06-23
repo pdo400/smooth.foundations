@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Smooth.Algebraics;
 using Smooth.Comparisons;
@@ -17,7 +16,7 @@ namespace Smooth.Collections {
 		/// If the specified list is empty, returns an empty option; otherwise, returns an option containing a random element from the specified list.
 		/// </summary>
 		public static Option<T> Random<T>(this IList<T> list) {
-			return list.Count == 0 ? Option<T>.None : new Option<T>(list[UnityEngine.Random.Range(0, list.Count)]);
+			return list.Count == 0 ? Option<T>.None : new Option<T>(list[RandomRange(0, list.Count)]);
 		}
 
 		/// <summary>
@@ -27,12 +26,25 @@ namespace Smooth.Collections {
 			var count = ts.Count;
 			var last = count - 1;
 			for (var i = 0; i < last; ++i) {
-				var r = UnityEngine.Random.Range(i, count);
+				var r = RandomRange(i, count);
 				var tmp = ts[i];
 				ts[i] = ts[r];
 				ts[r] = tmp;
 			}
 		}
+
+#if STANDARD_RUNTIME
+		private static readonly System.Threading.ThreadLocal<Random> random = 
+            new System.Threading.ThreadLocal<Random>(() => new Random());
+
+        private static Int32 RandomRange(Int32 min, Int32 max) {
+			return random.Value.Next(min, max);
+        }
+#else
+		private static Int32 RandomRange(Int32 min, Int32 max) {
+			return UnityEngine.Random.Range(min, max);
+		}
+#endif
 
 		#endregion
 		

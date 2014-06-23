@@ -1,4 +1,3 @@
-using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -97,7 +96,7 @@ namespace Smooth.Compare {
 				}
 			} catch (InvalidOperationException) {
 			} catch (Exception e) {
-				Debug.LogError(e);
+                Debugging.Debug.LogError(e);
 			}
 			
 			try {
@@ -113,7 +112,7 @@ namespace Smooth.Compare {
 					return new Option<Expression>(Expression.Call(l, mi, r));
 				}
 			} catch (Exception e) {
-				Debug.LogError(e);
+                Debugging.Debug.LogError(e);
 			}
 			
 			return Option<Expression>.None;
@@ -124,7 +123,7 @@ namespace Smooth.Compare {
 		/// an Expression for the default sort order comparer for type T, and
 		/// a MethodInfo for the comparer's Compare(T, T) method.
 		/// </summary>
-		public static Tuple<Expression, MethodInfo> ExistingComparer<T>() {
+		public static TupleValue<Expression, MethodInfo> ExistingComparer<T>() {
 			return ExistingComparer(typeof(T));
 		}
 
@@ -133,7 +132,7 @@ namespace Smooth.Compare {
 		/// an Expression for the default comparer for the specified type, and
 		/// a MethodInfo for the comparer's Compare(T, T) method.
 		/// </summary>
-		public static Tuple<Expression, MethodInfo> ExistingComparer(Type type) {
+		public static TupleValue<Expression, MethodInfo> ExistingComparer(Type type) {
 			var pi = typeof(Smooth.Collections.Comparer<>).MakeGenericType(type).GetProperty(
 				"Default",
 				BindingFlags.Public | BindingFlags.Static,
@@ -144,7 +143,7 @@ namespace Smooth.Compare {
 			
 			var c = Expression.Property(null, pi);
 			
-			return new Tuple<Expression, MethodInfo>(
+			return new TupleValue<Expression, MethodInfo>(
 				c,
 				c.Type.GetMethod("Compare", BindingFlags.Public | BindingFlags.Instance, null, new Type[] { type, type }, null));
 		}
@@ -155,7 +154,7 @@ namespace Smooth.Compare {
 		/// a MethodInfo for the comparer's Equals(T, T) method, and
 		/// a MethodInfo for the comparer's GetHashCode(T) method.
 		/// </summary>
-		public static Tuple<Expression, MethodInfo, MethodInfo> ExistingEqualityComparer<T>() {
+		public static TupleValue<Expression, MethodInfo, MethodInfo> ExistingEqualityComparer<T>() {
 			return ExistingEqualityComparer(typeof(T));
 		}
 
@@ -165,7 +164,7 @@ namespace Smooth.Compare {
 		/// a MethodInfo for the comparer's Equals(T, T) method, and
 		/// a MethodInfo for the comparer's GetHashCode(T) method.
 		/// </summary>
-		public static Tuple<Expression, MethodInfo, MethodInfo> ExistingEqualityComparer(Type type) {
+		public static TupleValue<Expression, MethodInfo, MethodInfo> ExistingEqualityComparer(Type type) {
 			var pi = typeof(Smooth.Collections.EqualityComparer<>).MakeGenericType(type).GetProperty(
 				"Default",
 				BindingFlags.Public | BindingFlags.Static,
@@ -176,7 +175,7 @@ namespace Smooth.Compare {
 			
 			var ec = Expression.Property(null, pi);
 
-			return new Tuple<Expression, MethodInfo, MethodInfo>(
+			return new TupleValue<Expression, MethodInfo, MethodInfo>(
 				ec,
 				ec.Type.GetMethod("Equals", BindingFlags.Public | BindingFlags.Instance, null, new Type[] { type, type }, null),
 				ec.Type.GetMethod("GetHashCode", BindingFlags.Public | BindingFlags.Instance, null, new Type[] { type }, null));

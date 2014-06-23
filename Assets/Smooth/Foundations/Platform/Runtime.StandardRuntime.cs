@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿#if STANDARD_RUNTIME
 using System;
 
 namespace Smooth.Platform {
@@ -9,15 +9,22 @@ namespace Smooth.Platform {
 	public static class Runtime {
 
 		/// <summary>
-		/// The target runtime platform.
+		/// Returns the base platform for this application.
 		/// </summary>
-		public static readonly RuntimePlatform platform = Application.platform;
+		private static BasePlatform GetBasePlatform() {
+			switch (Environment.OSVersion.Platform) {
+				case PlatformID.Unix: 
+					return BasePlatform.Linux;
+				default:
+					return BasePlatform.Windows;
+			}
+		}
 
 		/// <summary>
 		/// The base platform of the target runtime.
 		/// </summary>
-		public static readonly BasePlatform basePlatform = platform.ToBasePlatform();
-
+		public static readonly BasePlatform basePlatform = GetBasePlatform();
+		
 		/// <summary>
 		/// True if the base platform supports JIT compilation; otherwise false.
 		/// </summary>
@@ -26,7 +33,8 @@ namespace Smooth.Platform {
 		/// <summary>
 		/// True if the base platform does not support JIT compilation; otherwise false.
 		/// </summary>
-		public static readonly bool noJit = !hasJit;
+		public static readonly bool noJit = false;
 
 	}
 }
+#endif

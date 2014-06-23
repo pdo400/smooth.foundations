@@ -1,3 +1,4 @@
+#if !STANDARD_RUNTIME
 using UnityEngine;
 using System;
 
@@ -113,3 +114,4 @@ namespace Smooth.Platform {
 		}
 	}
 }
+#endif

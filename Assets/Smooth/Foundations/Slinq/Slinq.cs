@@ -1388,7 +1388,7 @@ namespace Smooth.Slinq {
 		/// 
 		/// This operation will consume and dispose the Slinq.
 		/// </summary>
-		public Tuple<LinkedHeadTail<T>, LinkedHeadTail<T>> SplitRight(int count) {
+		public TupleValue<LinkedHeadTail<T>, LinkedHeadTail<T>> SplitRight(int count) {
 			if (current.isSome) {
 				if (count > 0) {
 					var left = new LinkedHeadTail<T>();
@@ -1425,12 +1425,12 @@ namespace Smooth.Slinq {
 						left.tail.next = null;
 					}
 					
-					return new Tuple<LinkedHeadTail<T>, LinkedHeadTail<T>>(left, right);
+					return new TupleValue<LinkedHeadTail<T>, LinkedHeadTail<T>>(left, right);
 				} else {
-					return new Tuple<LinkedHeadTail<T>, LinkedHeadTail<T>>(ToLinked(), new LinkedHeadTail<T>());
+					return new TupleValue<LinkedHeadTail<T>, LinkedHeadTail<T>>(ToLinked(), new LinkedHeadTail<T>());
 				}
 			} else {
-				return new Tuple<LinkedHeadTail<T>, LinkedHeadTail<T>>();
+				return new TupleValue<LinkedHeadTail<T>, LinkedHeadTail<T>>();
 			}
 		}
 
@@ -2538,14 +2538,14 @@ namespace Smooth.Slinq {
 		/// <summary>
 		/// Analog to Enumerable.Zip() that combines elements into tuples and chains removal operations to the left Slinq.
 		/// </summary>
-		public static Slinq<Tuple<T, T2>, ZipContext<T2, C2, T, C>> Zip<T2, C2, T, C>(this Slinq<T, C> slinq, Slinq<T2, C2> with) {
+		public static Slinq<TupleValue<T, T2>, ZipContext<T2, C2, T, C>> Zip<T2, C2, T, C>(this Slinq<T, C> slinq, Slinq<T2, C2> with) {
 			return ZipContext<T2, C2, T, C>.Zip(slinq, with, ZipRemoveFlags.Left);
 		}
 		
 		/// <summary>
 		/// Analog to Enumerable.Zip() that combines elements into tuples and chains removal operations to the the specified Slinq(s).
 		/// </summary>
-		public static Slinq<Tuple<T, T2>, ZipContext<T2, C2, T, C>> Zip<T2, C2, T, C>(this Slinq<T, C> slinq, Slinq<T2, C2> with, ZipRemoveFlags removeFlags) {
+		public static Slinq<TupleValue<T, T2>, ZipContext<T2, C2, T, C>> Zip<T2, C2, T, C>(this Slinq<T, C> slinq, Slinq<T2, C2> with, ZipRemoveFlags removeFlags) {
 			return ZipContext<T2, C2, T, C>.Zip(slinq, with, removeFlags);
 		}
 
@@ -2588,7 +2588,7 @@ namespace Smooth.Slinq {
 		/// 
 		/// Removal operations will not be chained to an empty Slinq.
 		/// </summary>
-		public static Slinq<Tuple<Option<T>, Option<T2>>, ZipAllContext<T2, C2, T, C>> ZipAll<T2, C2, T, C>(this Slinq<T, C> slinq, Slinq<T2, C2> with) {
+		public static Slinq<TupleValue<Option<T>, Option<T2>>, ZipAllContext<T2, C2, T, C>> ZipAll<T2, C2, T, C>(this Slinq<T, C> slinq, Slinq<T2, C2> with) {
 			return ZipAllContext<T2, C2, T, C>.ZipAll(slinq, with, ZipRemoveFlags.Left);
 		}
 		
@@ -2603,7 +2603,7 @@ namespace Smooth.Slinq {
 		/// 
 		/// Removal operations will not be chained to an empty Slinq.
 		/// </summary>
-		public static Slinq<Tuple<Option<T>, Option<T2>>, ZipAllContext<T2, C2, T, C>> ZipAll<T2, C2, T, C>(this Slinq<T, C> slinq, Slinq<T2, C2> with, ZipRemoveFlags removeFlags) {
+		public static Slinq<TupleValue<Option<T>, Option<T2>>, ZipAllContext<T2, C2, T, C>> ZipAll<T2, C2, T, C>(this Slinq<T, C> slinq, Slinq<T2, C2> with, ZipRemoveFlags removeFlags) {
 			return ZipAllContext<T2, C2, T, C>.ZipAll(slinq, with, removeFlags);
 		}
 		
@@ -2670,7 +2670,7 @@ namespace Smooth.Slinq {
 		/// <summary>
 		/// Zips the specified Slinq with a zero-based index.
 		/// </summary>
-		public static Slinq<Tuple<T, int>, ZipContext<int, FuncContext<int, int>, T, C>> ZipWithIndex<T, C>(this Slinq<T, C> slinq) {
+		public static Slinq<TupleValue<T, int>, ZipContext<int, FuncContext<int, int>, T, C>> ZipWithIndex<T, C>(this Slinq<T, C> slinq) {
 			return ZipContext<int, FuncContext<int, int>, T, C>.Zip(slinq, Slinqable.Sequence(0, 1), ZipRemoveFlags.Left);
 		}
 		

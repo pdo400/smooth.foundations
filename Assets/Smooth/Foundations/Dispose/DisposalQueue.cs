@@ -1,4 +1,3 @@
-using UnityEngine;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -52,15 +51,21 @@ namespace Smooth.Dispose {
 						dispose.Dequeue().Dispose();
 					} catch (ThreadAbortException) {
 					} catch (Exception e) {
-						Debug.LogError(e);
+						Debugging.Debug.LogError(e);
 					}
 				}
 			}
 		}
 
 		static DisposalQueue() {
+#if STANDARD_RUNTIME
+            var t = new Thread(Dispose);
+            t.IsBackground = true;
+            t.Start();
+#else
 			new Thread(new ThreadStart(Dispose)).Start();
-			new GameObject(typeof(SmoothDisposer).Name).AddComponent<SmoothDisposer>();
-		}
+			new UnityEngine.GameObject(typeof(SmoothDisposer).Name).AddComponent<SmoothDisposer>();
+#endif
+        }
 	}
 }

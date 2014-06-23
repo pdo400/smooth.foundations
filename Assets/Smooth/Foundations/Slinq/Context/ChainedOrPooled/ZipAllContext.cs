@@ -4,14 +4,14 @@ using Smooth.Delegates;
 
 namespace Smooth.Slinq.Context {
 	
-	#region Tuple
+	#region TupleValue
 	
 	public struct ZipAllContext<T2, C2, T, C> {
 		
 		#region Slinqs
 		
-		public static Slinq<Tuple<Option<T>, Option<T2>>, ZipAllContext<T2, C2, T, C>> ZipAll(Slinq<T, C> left, Slinq<T2, C2> right, ZipRemoveFlags removeFlags) {
-			return new Slinq<Tuple<Option<T>, Option<T2>>, ZipAllContext<T2, C2, T, C>>(
+		public static Slinq<TupleValue<Option<T>, Option<T2>>, ZipAllContext<T2, C2, T, C>> ZipAll(Slinq<T, C> left, Slinq<T2, C2> right, ZipRemoveFlags removeFlags) {
+			return new Slinq<TupleValue<Option<T>, Option<T2>>, ZipAllContext<T2, C2, T, C>>(
 				skip,
 				remove,
 				dispose,
@@ -44,11 +44,11 @@ namespace Smooth.Slinq.Context {
 		
 		#region Delegates
 		
-		private static readonly Mutator<Tuple<Option<T>, Option<T2>>, ZipAllContext<T2, C2, T, C>> skip = Skip;
-		private static readonly Mutator<Tuple<Option<T>, Option<T2>>, ZipAllContext<T2, C2, T, C>> remove = Remove;
-		private static readonly Mutator<Tuple<Option<T>, Option<T2>>, ZipAllContext<T2, C2, T, C>> dispose = Dispose;
+		private static readonly Mutator<TupleValue<Option<T>, Option<T2>>, ZipAllContext<T2, C2, T, C>> skip = Skip;
+		private static readonly Mutator<TupleValue<Option<T>, Option<T2>>, ZipAllContext<T2, C2, T, C>> remove = Remove;
+		private static readonly Mutator<TupleValue<Option<T>, Option<T2>>, ZipAllContext<T2, C2, T, C>> dispose = Dispose;
 		
-		private static void Skip(ref ZipAllContext<T2, C2, T, C> context, out Option<Tuple<Option<T>, Option<T2>>> next) {
+		private static void Skip(ref ZipAllContext<T2, C2, T, C> context, out Option<TupleValue<Option<T>, Option<T2>>> next) {
 			context.bd.DetectBacktrack();
 			
 			if (context.needsMove) {
@@ -65,9 +65,9 @@ namespace Smooth.Slinq.Context {
 			}
 			
 			if (context.left.current.isSome || context.right.current.isSome) {
-				next = new Option<Tuple<Option<T>, Option<T2>>>(new Tuple<Option<T>, Option<T2>>(context.left.current, context.right.current));
+				next = new Option<TupleValue<Option<T>, Option<T2>>>(new TupleValue<Option<T>, Option<T2>>(context.left.current, context.right.current));
 			} else {
-				next = new Option<Tuple<Option<T>, Option<T2>>>();
+				next = new Option<TupleValue<Option<T>, Option<T2>>>();
 			}
 			
 			if (!next.isSome) {
@@ -75,7 +75,7 @@ namespace Smooth.Slinq.Context {
 			}
 		}
 		
-		private static void Remove(ref ZipAllContext<T2, C2, T, C> context, out Option<Tuple<Option<T>, Option<T2>>> next) {
+		private static void Remove(ref ZipAllContext<T2, C2, T, C> context, out Option<TupleValue<Option<T>, Option<T2>>> next) {
 			context.bd.DetectBacktrack();
 			
 			context.needsMove = false;
@@ -99,8 +99,8 @@ namespace Smooth.Slinq.Context {
 			Skip(ref context, out next);
 		}
 		
-		private static void Dispose(ref ZipAllContext<T2, C2, T, C> context, out Option<Tuple<Option<T>, Option<T2>>> next) {
-			next = new Option<Tuple<Option<T>, Option<T2>>>();
+		private static void Dispose(ref ZipAllContext<T2, C2, T, C> context, out Option<TupleValue<Option<T>, Option<T2>>> next) {
+			next = new Option<TupleValue<Option<T>, Option<T2>>>();
 			
 			context.bd.Release();
 			

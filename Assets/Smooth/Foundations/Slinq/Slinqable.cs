@@ -61,7 +61,7 @@ namespace Smooth.Slinq {
 		/// 
 		/// Slinqs created by this method will chain removal operations to the underlying list.
 		/// </summary>
-		public static Slinq<Tuple<T, int>, IListContext<T>> SlinqWithIndex<T>(this IList<T> list, int startIndex, int step) {
+		public static Slinq<TupleValue<T, int>, IListContext<T>> SlinqWithIndex<T>(this IList<T> list, int startIndex, int step) {
 			return IListContext<T>.SlinqWithIndex(list, startIndex, step);
 		}
 
@@ -83,7 +83,7 @@ namespace Smooth.Slinq {
 		/// 
 		/// Slinqs created by this method will chain removal operations to the underlying list.
 		/// </summary>
-		public static Slinq<Tuple<T, int>, IListContext<T>> SlinqWithIndex<T>(this IList<T> list) {
+		public static Slinq<TupleValue<T, int>, IListContext<T>> SlinqWithIndex<T>(this IList<T> list) {
 			return IListContext<T>.SlinqWithIndex(list, 0, 1);
 		}
 		
@@ -105,7 +105,7 @@ namespace Smooth.Slinq {
 		/// 
 		/// Slinqs created by this method will chain removal operations to the underlying list.
 		/// </summary>
-		public static Slinq<Tuple<T, int>, IListContext<T>> SlinqWithIndex<T>(this IList<T> list, int startIndex) {
+		public static Slinq<TupleValue<T, int>, IListContext<T>> SlinqWithIndex<T>(this IList<T> list, int startIndex) {
 			return IListContext<T>.SlinqWithIndex(list, startIndex, 1);
 		}
 
@@ -127,7 +127,7 @@ namespace Smooth.Slinq {
 		/// 
 		/// Slinqs created by this method will chain removal operations to the underlying list.
 		/// </summary>
-		public static Slinq<Tuple<T, int>, IListContext<T>> SlinqWithIndexDescending<T>(this IList<T> list) {
+		public static Slinq<TupleValue<T, int>, IListContext<T>> SlinqWithIndexDescending<T>(this IList<T> list) {
 			return IListContext<T>.SlinqWithIndex(list, list.Count - 1, -1);
 		}
 		
@@ -149,7 +149,7 @@ namespace Smooth.Slinq {
 		/// 
 		/// Slinqs created by this method will chain removal operations to the underlying list.
 		/// </summary>
-		public static Slinq<Tuple<T, int>, IListContext<T>> SlinqWithIndexDescending<T>(this IList<T> list, int startIndex) {
+		public static Slinq<TupleValue<T, int>, IListContext<T>> SlinqWithIndexDescending<T>(this IList<T> list, int startIndex) {
 			return IListContext<T>.SlinqWithIndex(list, startIndex, -1);
 		}
 
